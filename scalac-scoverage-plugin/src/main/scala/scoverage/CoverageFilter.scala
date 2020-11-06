@@ -83,7 +83,7 @@ class RegexCoverageFilter(excludedPackages: Seq[String],
     linesExcludedByScoverageCommentsCache.get(sourceFile) match {
       case Some(lineNumbers) => lineNumbers
       case None =>
-        val lineNumbers = scoverageExclusionCommentsRegex.findAllIn(sourceFile.content).matchData.map { m =>
+        val lineNumbers = scoverageExclusionCommentsRegex.findAllIn(java.nio.CharBuffer.wrap(sourceFile.content)).matchData.map { m =>
           // Asking a SourceFile for the line number of the char after
           // the end of the file gives an exception
           val endChar = math.min(m.end(2), sourceFile.content.length - 1)
